@@ -1,0 +1,51 @@
+@page "/todo-list"
+
+<h1>TODOs</h1>
+
+<p>Total: @todoItems.Count</p>
+<p>Finished: @todoItems.Count(x => x.IsFinished)</p>
+
+<div>
+@foreach (var todoItem in todoItems)
+{
+    <div class="form-inline">
+      <span class="badge">@(todoItem.Id).</span>&nbsp;
+      <input type="text" class="form-control" @value="@todoItem.Name" />&nbsp;
+      <input 
+        type="button" 
+        class="btn btn-@(todoItem.IsFinished ? "warning" : "success")" 
+        @onclick="@(() => todoItem.IsFinished = !todoItem.IsFinished)" 
+        value="Mark @(todoItem.IsFinished ? "Unfinished" : "Finished")" />&nbsp;
+      <input 
+        type="button" 
+        class="btn btn-danger" 
+        @onclick="@(() => todoItems.Remove(todoItem))" value="Remove" />
+    </div>
+    <br>
+}
+</div>
+
+<hr/>
+<button class="btn btn-primary" @onclick="@AddTodo">Add New TODO</button>
+
+@code {
+
+    class TodoItem 
+    {
+      public TodoItem(int nextId)
+      {
+        Id = nextId;
+      }
+
+      public int Id { get; private set; }
+      public string Name { get; set; }
+      public bool IsFinished { get; set; }
+    }
+
+    List<TodoItem> todoItems = new List<TodoItem>();
+
+    void AddTodo()
+    {
+        todoItems.Add(new TodoItem(todoItems.Count + 1));
+    }
+}
