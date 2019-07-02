@@ -1,33 +1,25 @@
 /// <reference types="Cypress" />
 
-describe("navigation", function() {
+const home = "https://localhost:5001";
+
+describe("navigation", function () {
   it("opens home page", function() {
-    cy.visit("https://localhost:5001");
+    cy.visit(home);
     cy.contains("Hello, world!");
   });
 
   it("opens home page and navigates to TODO list", function() {
-    cy.visit("https://localhost:5001");
+    cy.visit(home);
 
     cy.contains("TODO list").click();
-    cy.url().should("eq", "https://localhost:5001/todo-list");
+    cy.url().should("eq", home + "/todo-list");
     cy.contains("TODOs");
   });
-});
 
-// WARNING: does not work with blazor
-// describe("TODO list", function() {
-//   it("should add three TODOs", function() {
-//     cy.visit("https://localhost:5001/todo-list");
-    
-//     cy.get(".btn-primary").click();
-//     // addBtn.click({ force: true });
-//     // cy.wait(100);
-//     // addBtn.click({ force: true });
-//     // cy.wait(100);
-//     // addBtn.click({ force: true });
-//     // cy.wait(100);
-    
-//     // cy.get(".form-inline").should("have.length", 1);
-//   });
-// });
+  // WARNING: does not work with blazor, seems click event is not propagated
+  it.only("opens counter page", function () {
+    cy.visit(home);
+    cy.contains("Counter").click();
+    cy.get(".content p").should("contain", 1);
+  });
+});

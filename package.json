@@ -2,9 +2,9 @@
   "name": "blazorcypress",
   "version": "1.0.0",
   "description": "testing blazor with cypress",
-  "main": "index.js",
   "scripts": {
-    "cy:open": "npx cypress open"
+    "cy:open": "npx cypress open",
+    "test": "npx cypress run"
   },
   "keywords": [
     "e2e",
