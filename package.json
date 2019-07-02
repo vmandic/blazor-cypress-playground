@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "description": "testing blazor with cypress",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "npx cypress open"
   },
   "keywords": [
     "e2e",
@@ -15,5 +12,10 @@
     "aspnetcore"
   ],
   "author": "Vedran Mandić",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^3.3.2",
+    "eslint": "^6.0.1",
+    "eslint-plugin-cypress": "^2.2.1"
+  }
 }
