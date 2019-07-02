@@ -1,16 +1,31 @@
 @page "/todo-list"
 
+<style>
+  .striked {
+    text-decoration: line-through;
+  }
+</style>
+
 <h1>TODOs</h1>
 
 <p>Total: @todoItems.Count</p>
 <p>Finished: @todoItems.Count(x => x.IsFinished)</p>
 
+<hr/>
+<button class="btn btn-primary" @onclick="@AddTodo">Add New TODO</button>
+<hr/>
+
 <div>
+
+@{   
+  int i = 1; 
+}
+
 @foreach (var todoItem in todoItems)
 {
     <div class="form-inline">
-      <span class="badge">@(todoItem.Id).</span>&nbsp;
-      <input type="text" class="form-control" @value="@todoItem.Name" />&nbsp;
+      <span class="badge">@(i).</span>&nbsp;
+      <input type="text" class="form-control @(todoItem.IsFinished ? "striked" : "")" @value="@todoItem.Name" />&nbsp;
       <input 
         type="button" 
         class="btn btn-@(todoItem.IsFinished ? "warning" : "success")" 
@@ -19,25 +34,17 @@
       <input 
         type="button" 
         class="btn btn-danger" 
-        @onclick="@(() => todoItems.Remove(todoItem))" value="Remove" />
+        @onclick="@(() => todoItems.Remove(todoItem))" value="X" />
     </div>
     <br>
+    i++;
 }
 </div>
-
-<hr/>
-<button class="btn btn-primary" @onclick="@AddTodo">Add New TODO</button>
 
 @code {
 
     class TodoItem 
     {
-      public TodoItem(int nextId)
-      {
-        Id = nextId;
-      }
-
-      public int Id { get; private set; }
       public string Name { get; set; }
       public bool IsFinished { get; set; }
     }
@@ -46,6 +53,6 @@
 
     void AddTodo()
     {
-        todoItems.Add(new TodoItem(todoItems.Count + 1));
+        todoItems.Add(new TodoItem());
     }
 }
